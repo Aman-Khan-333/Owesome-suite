@@ -1,0 +1,19 @@
+# --- Deploy only the landing page; exclude source captures & scratch ---
+
+# Local Framer/HTTrack mirror and unrelated template captures
+Framer/
+Active/
+Ferrix/
+Promoora/
+Sadewa/
+Sassyfy/
+Assets/
+
+# Dependencies / build
+node_modules/
+.vercel/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
