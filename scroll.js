@@ -72,6 +72,9 @@
   /* ---------- Scroll-driven parallax + dashboard tilt ---------- */
   var hero = document.getElementById("hero");
   var dashboard = document.querySelector(".hero__dashboard");
+  var heroContent = document.querySelector(".hero__content");
+  var heroStage = document.querySelector(".hero__stage");
+  var heroNature = document.querySelector(".hero__nature");
   var parallaxEls = document.querySelectorAll("[data-parallax]");
   var nav = document.getElementById("nav");
 
@@ -90,27 +93,39 @@
       el.style.transform = "translateY(" + -(y * factor) + "px)";
     });
 
-    // Dashboard stand-up — scrubbed by progress through the hero's pinned track.
-    // The .hero is a tall track; .hero__stage is sticky, so the viewport holds
-    // in place while the dashboard rotates from tilted-back to facing the user.
+    // Pinned hero reveal: while the stage is pinned, the copy + background
+    // scroll upward and fade out, and the dashboard zooms in where it sits;
+    // then the page releases into the next section.
     if (dashboard && hero) {
       var rect = hero.getBoundingClientRect();
-      var track = hero.offsetHeight - window.innerHeight;
+      var track = hero.offsetHeight - window.innerHeight; // pinned scroll length
       var p = track > 0 ? clamp(-rect.top / track, 0, 1) : 0;
       if (reduceMotion) p = 1;
 
-      // finish standing up over the first ~70% of the track, then hold.
-      // Pivot is the top edge (CSS transform-origin), so the dashboard's top
-      // stays parked at ~57% while it rotates upright — no drift into the copy.
-      var a = clamp(p / 0.7, 0, 1);
-      var rot = 34 * (1 - a); // 34deg tilted back -> 0deg facing the user
-      var ty = 40 * (1 - a); // small settle: starts 40px lower, lands on the line
+      // the zoom runs across the whole pinned track and finishes right as the
+      // pin releases — no hold/stop at the end
+      var a = p;
+      var stageH = heroStage ? heroStage.offsetHeight : window.innerHeight;
+      var lift = a * (0.43 * stageH + 70); // how far the dashboard rises
+
+      // hero copy scrolls straight up with the scroll (1:1, no fade) and slides
+      // out the top of the pinned stage. The bottom fade stays put.
+      var scrolled = Math.max(0, -rect.top);
+      if (heroContent) {
+        heroContent.style.transform = "translateY(" + (-scrolled).toFixed(1) + "px)";
+      }
+
+      // background rises with the zoom so its glow ends up centred on the
+      // dashboard once it's fully visible
+      if (heroNature) {
+        heroNature.style.transform = "translateY(" + (-a * 0.33 * stageH).toFixed(1) + "px)";
+      }
+
+      // dashboard zooms in and lifts up so the whole screenshot ends up visible
+      var ty = 70 - lift;
+      var scale = 0.9 + a * 0.1; // 0.9 -> 1.0 (peek grows to full size)
       dashboard.style.transform =
-        "translateX(-50%) perspective(1300px) translateY(" +
-        ty.toFixed(1) +
-        "px) rotateX(" +
-        rot.toFixed(2) +
-        "deg)";
+        "translateX(-50%) translateY(" + ty.toFixed(1) + "px) scale(" + scale.toFixed(3) + ")";
     }
 
     // Nav solidifies after a little scroll
@@ -291,14 +306,24 @@
     });
   }
 
-  /* ---------- FAQ accordion ---------- */
+  /* ---------- FAQ accordion (single-open: opening one closes the rest) ---------- */
   var faqItems = document.querySelectorAll(".single-faq");
   faqItems.forEach(function (item) {
     var q = item.querySelector(".faq-question");
     if (!q) return;
     q.addEventListener("click", function () {
-      var open = item.classList.toggle("is-open");
-      q.setAttribute("aria-expanded", open ? "true" : "false");
+      var willOpen = !item.classList.contains("is-open");
+      // close every item first
+      faqItems.forEach(function (other) {
+        other.classList.remove("is-open");
+        var oq = other.querySelector(".faq-question");
+        if (oq) oq.setAttribute("aria-expanded", "false");
+      });
+      // then open the clicked one (if it was closed)
+      if (willOpen) {
+        item.classList.add("is-open");
+        q.setAttribute("aria-expanded", "true");
+      }
     });
     q.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") {
@@ -307,6 +332,76 @@
       }
     });
   });
+
+  /* ---------- Heading letter-stagger reveal ([data-letters]) ----------
+     same effect as the final-CTA heading: split into per-letter spans that
+     fade + rise in with a stagger, triggered when the heading scrolls in.
+     Preserves <br> line breaks and the serif .title-em accent. */
+  var letterHeadings = document.querySelectorAll("[data-letters]");
+  if (letterHeadings.length) {
+    var splitLetters = function (el) {
+      var d = { v: 0 };
+      function addLetters(text, container) {
+        text.split("").forEach(function (ch) {
+          if (ch === " ") {
+            container.appendChild(document.createTextNode(" "));
+            return;
+          }
+          var s = document.createElement("span");
+          s.className = "rv-letter";
+          s.textContent = ch;
+          s.style.transitionDelay = d.v + "ms";
+          d.v += 22;
+          container.appendChild(s);
+        });
+      }
+      var nodes = Array.prototype.slice.call(el.childNodes);
+      el.textContent = "";
+      nodes.forEach(function (node) {
+        if (node.nodeName === "BR") {
+          el.appendChild(document.createElement("br"));
+          return;
+        }
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          var wrap = document.createElement("span");
+          wrap.className = node.className; // keep .title-em etc.
+          addLetters(node.textContent.replace(/\s+/g, " ").trim(), wrap);
+          el.appendChild(wrap);
+        } else {
+          var txt = node.textContent.replace(/\s+/g, " ");
+          if (txt.trim() === "") return;
+          addLetters(txt, el);
+        }
+      });
+    };
+
+    var fireLetters = function (el) {
+      el.querySelectorAll(".rv-letter").forEach(function (l) {
+        l.classList.add("is-in");
+      });
+    };
+
+    letterHeadings.forEach(splitLetters);
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      letterHeadings.forEach(fireLetters);
+    } else {
+      var letterIO = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              fireLetters(e.target);
+              letterIO.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      letterHeadings.forEach(function (el) {
+        letterIO.observe(el);
+      });
+    }
+  }
 
   /* ---------- Per-section fade + blur reveal ([data-section-reveal]) ---------- */
   var sectionReveals = document.querySelectorAll("[data-section-reveal]");
@@ -319,7 +414,12 @@
       var secIO = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (e) {
-            if (e.isIntersecting) {
+            // Sections flagged [data-section-reveal-repeat] replay their
+            // entrance every time they re-enter the viewport (reset on exit);
+            // all others reveal once and are then unobserved.
+            if (e.target.hasAttribute("data-section-reveal-repeat")) {
+              e.target.classList.toggle("is-revealed", e.isIntersecting);
+            } else if (e.isIntersecting) {
               e.target.classList.add("is-revealed");
               secIO.unobserve(e.target);
             }
@@ -465,12 +565,29 @@
     function navTheme() {
       // probe a point inside the nav bar (~half its height)
       var probe = nav.offsetHeight * 0.5;
+      var navH = nav.offsetHeight;
+      var ramp = 70; // px over which the dark fade ramps in/out
       var dark = false;
+      var fadeH = 150; // default fade height
+      var op = 0; // dark fade opacity
       darkSections.forEach(function (s) {
         var r = s.getBoundingClientRect();
         if (r.top <= probe && r.bottom >= probe) dark = true;
+        // dark fade opacity: ramps in as the section top rises under the nav,
+        // and ramps out as the section bottom reaches the nav bottom (the
+        // dark/light boundary) — so it disappears exactly at that seam
+        var fadeIn = clamp((navH - r.top) / ramp, 0, 1);
+        var fadeOut = clamp((r.bottom - navH) / ramp, 0, 1);
+        op = Math.max(op, Math.min(fadeIn, fadeOut));
+        // clip the fade height to the section bottom so it never spills onto
+        // the light section below
+        if (r.bottom >= 0 && r.bottom < 150) {
+          fadeH = Math.min(fadeH, r.bottom);
+        }
       });
       nav.classList.toggle("nav--dark", dark);
+      nav.style.setProperty("--nav-fade-h", fadeH + "px");
+      nav.style.setProperty("--nav-fade-op", op.toFixed(3));
     }
     window.addEventListener("scroll", navTheme, { passive: true });
     window.addEventListener("resize", navTheme);
@@ -576,82 +693,74 @@
     }
   }
 
-  /* ---------- Process: scroll-scrubbed rotating dial + step carousel ---------- */
+  /* ---------- Process: tabbed step card (auto-advances, click to jump) ---------- */
   var proc = document.getElementById("process");
   if (proc) {
-    var procOrbit = proc.querySelector(".process__orbit");
-    var procSteps = proc.querySelectorAll(".process__step");
-    var procIcons = proc.querySelectorAll(".process__icon");
-    var STEPS = procSteps.length; // 4
-    var GAP = 200; // px each step slides through (matches the CSS resting offset)
-    var procTicking = false;
-    var lastActive = -1;
+    var procTabs = proc.querySelectorAll(".process__tab");
+    var procPanels = proc.querySelectorAll(".process__panel");
+    var procCopies = proc.querySelectorAll(".process__copy");
+    var STEPS = procPanels.length; // 4
+    var procActive = 0;
+    var procTimer = null;
+    var AUTO_MS = 4000;
 
-    function procRender() {
-      var rect = proc.getBoundingClientRect();
-      var vh = window.innerHeight;
-      // progress across the sticky track: 0 when the section pins, 1 at the end
-      var track = rect.height - vh;
-      var p = track > 0 ? clamp(-rect.top / track, 0, 1) : 0;
-      if (reduceMotion) p = 0;
-
-      // continuous position along the 4 steps (0 .. STEPS-1)
-      var pos = p * (STEPS - 1);
-      var active = Math.round(pos);
-
-      // dial spins 90deg per step so the active icon swings to the top
-      procOrbit.style.setProperty("--spin", -pos * 90 + "deg");
-
-      // each icon is fully visible/sharp at the top (apex) and fades + blurs
-      // to nothing toward the bottom of the orbit (its start/end positions)
-      procIcons.forEach(function (icon) {
-        var idx = parseInt(icon.getAttribute("data-icon"), 10);
-        var ang = ((idx - pos) * 90) % 360; // degrees from the top
-        if (ang > 180) ang -= 360;
-        if (ang < -180) ang += 360;
-        var frac = Math.abs(ang) / 180; // 0 = top, 1 = bottom
-        // crisp at the top, then ramps to heavy blur and reaches opacity 0
-        // by ~72deg from the top (well before the sides)
-        var f = frac / 0.4;
-        icon.style.opacity = clamp(1 - f * f, 0, 1).toFixed(3);
-        icon.style.filter =
-          frac > 0.02 ? "blur(" + (frac * frac * 80).toFixed(2) + "px)" : "none";
+    function procShow(idx) {
+      procActive = (idx + STEPS) % STEPS;
+      procTabs.forEach(function (tab, i) {
+        var on = i === procActive;
+        tab.classList.toggle("is-active", on);
+        tab.setAttribute("aria-selected", on ? "true" : "false");
       });
-
-      // step copy: active one centred, others slid out (above if passed, below if upcoming)
-      procSteps.forEach(function (step, i) {
-        var delta = i - pos;
-        var offset = delta * GAP;
-        var op = clamp(1 - Math.abs(delta) * 1.4, 0, 1);
-        step.style.transform =
-          "translate(-50%, " + offset + "px)";
-        step.style.opacity = op;
-        step.classList.toggle("is-active", i === active);
+      procPanels.forEach(function (panel, i) {
+        panel.classList.toggle("is-active", i === procActive);
       });
-
-      if (active !== lastActive) {
-        procIcons.forEach(function (icon) {
-          icon.classList.toggle(
-            "is-active",
-            parseInt(icon.getAttribute("data-icon"), 10) === active
-          );
-        });
-        lastActive = active;
-      }
-
-      procTicking = false;
+      procCopies.forEach(function (copy, i) {
+        copy.classList.toggle("is-active", i === procActive);
+      });
     }
 
-    function procTick() {
-      if (!procTicking) {
-        procTicking = true;
-        requestAnimationFrame(procRender);
+    function procStart() {
+      if (reduceMotion || procTimer) return;
+      procTimer = setInterval(function () {
+        procShow(procActive + 1);
+      }, AUTO_MS);
+    }
+
+    function procStop() {
+      if (procTimer) {
+        clearInterval(procTimer);
+        procTimer = null;
       }
     }
 
-    window.addEventListener("scroll", procTick, { passive: true });
-    window.addEventListener("resize", procTick);
-    procRender();
+    procTabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        procStop();
+        procShow(parseInt(tab.getAttribute("data-tab"), 10));
+        procStart();
+      });
+    });
+
+    // pause the auto-advance while the user is hovering the card
+    proc.addEventListener("mouseenter", procStop);
+    proc.addEventListener("mouseleave", procStart);
+
+    // only run the auto-advance while the section is on screen
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) procStart();
+            else procStop();
+          });
+        },
+        { threshold: 0.25 }
+      ).observe(proc);
+    } else {
+      procStart();
+    }
+
+    procShow(0);
   }
 
   /* ---------- Bottlenecks: sticky stage with drifting alert cards ---------- */
@@ -715,32 +824,24 @@
       }
     }
 
-    // cards reveal one-by-one (each with a glitch entrance) as the stage is pinned,
-    // plus a gentle scroll-scrubbed vertical drift.
-    var bCards = bottle.querySelectorAll(".alert-card");
-    // scroll-progress point at which each card pops in (in DOM order)
-    var REVEAL_AT = [0.12, 0.34, 0.56, 0.76];
+    // once the section is 60% scrolled into view, the four cards cascade in
+    // one-by-one (the stagger comes from per-card CSS transition-delays)
+    var bCards = bottle.querySelectorAll(".stat-card");
+    var REVEAL_AT = 0.4; // entry progress at which the cascade fires
     var bTicking = false;
 
     function bRender() {
       var rect = bottle.getBoundingClientRect();
       var vh = window.innerHeight;
-      var track = rect.height - vh; // length of the pinned scroll
-      var p = track > 0 ? clamp(-rect.top / track, 0, 1) : 0;
+      // entry progress: 0 when the section's top hits the bottom of the screen,
+      // 1 when its top reaches the top of the screen
+      var entry = clamp((vh - rect.top) / vh, 0, 1);
 
-      // p: 0 (entering) -> 1 (leaving). Map to -1..1 so cards pass through centre.
-      var t = (0.5 - p) * 2;
-      bCards.forEach(function (card, i) {
-        var drift = parseFloat(card.getAttribute("data-drift")) || 0.5;
-        var ty = t * 90 * drift;
-        // set as a variable so CSS can compose it with any centring translateX
-        card.style.setProperty("--drift-y", ty.toFixed(2) + "px");
-
-        // toggle reveal — removing the class resets the glitch so it re-plays on re-entry
-        var at = REVEAL_AT[i] != null ? REVEAL_AT[i] : 0.5;
-        var on = reduceMotion ? true : p >= at;
-        card.classList.toggle("is-revealed", on);
-      });
+      if (reduceMotion || entry >= REVEAL_AT) {
+        bCards.forEach(function (card) {
+          card.classList.add("is-revealed");
+        });
+      }
       bTicking = false;
     }
 

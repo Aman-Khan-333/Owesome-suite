@@ -1,0 +1,10 @@
+{
+  "name": "owesome-suite-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Owesome Suite landing page — static site with a tiny local preview server.",
+  "scripts": {
+    "start": "node serve.js",
+    "serve": "node serve.js"
+  }
+}
