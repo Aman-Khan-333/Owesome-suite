@@ -7,23 +7,35 @@
   <link rel="icon" type="image/png" href="Assets/Logos/Favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- warm up connections to the external image/asset hosts used lower on the page -->
+  <link rel="preconnect" href="https://cdn.prod.website-files.com" crossorigin />
+  <link rel="preconnect" href="https://randomuser.me" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- preload the above-the-fold hero art so it starts downloading before CSS/JS parse -->
+  <link rel="preload" as="image" href="Assets/BG 6.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="Assets/Dashboard.png" />
 </head>
 <body>
   <!-- ===== Navigation ===== -->
   <div class="nav" id="nav">
     <nav class="nav__bar" aria-label="Primary">
       <a class="nav__logo" href="#hero" aria-label="Owesome Suite home">
-        <img class="nav__logo-img nav__logo-img--light" src="media/logo.png" alt="Owesome Suite" width="761" height="130" />
-        <img class="nav__logo-img nav__logo-img--dark" src="Assets/Dark Logo.png" alt="Owesome Suite" width="761" height="130" />
+        <img decoding="async" class="nav__logo-img nav__logo-img--light" src="media/logo.png" alt="Owesome Suite" width="761" height="130" />
+        <img decoding="async" class="nav__logo-img nav__logo-img--dark" src="Assets/Dark Logo.png" alt="Owesome Suite" width="761" height="130" />
       </a>
 
-      <div class="nav__pill">
+      <div class="nav__pill" id="nav-menu">
         <a href="#video">About us</a>
         <a href="#pricing">Pricing</a>
         <a href="#contact">Contact</a>
       </div>
+
+      <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
     </nav>
   </div>
@@ -37,7 +49,7 @@
    <!-- pinned stage: stays in view while the dashboard stands up on scroll -->
    <div class="hero__stage">
     <!-- Nature background at the base of the hero -->
-    <img
+    <img decoding="async" fetchpriority="high"
       class="hero__nature"
       src="Assets/BG 6.png"
       alt=""
@@ -84,7 +96,7 @@
 
     <!-- Dashboard screenshot — rotates flat on scroll -->
     <div class="hero__dashboard">
-      <img
+      <img decoding="async" fetchpriority="high"
         src="Assets/Dashboard.png"
         alt="SaaS Dashboard"
       />
@@ -99,17 +111,17 @@
       <div class="clients__track">
         <!-- group 1 -->
         <div class="clients__group">
-          <span class="client-logo"><img class="client-logo__img" src="Assets/Logos/Asset 13@4x.png" alt="Owesome Work" /></span>
-          <span class="client-logo"><img class="client-logo__img" src="Assets/Logos/Asset 14@4x.png" alt="Owesome Human Resource" /></span>
-          <span class="client-logo"><img class="client-logo__img" src="Assets/Logos/Asset 15@4x.png" alt="Owesome Recruiter" /></span>
-          <span class="client-logo"><img class="client-logo__img" src="Assets/Logos/Asset 16@4x.png" alt="Owesome Time Tracker" /></span>
+          <span class="client-logo"><img decoding="async" class="client-logo__img" src="Assets/Logos/Asset 13@4x.png" alt="Owesome Work" /></span>
+          <span class="client-logo"><img decoding="async" class="client-logo__img" src="Assets/Logos/Asset 14@4x.png" alt="Owesome Human Resource" /></span>
+          <span class="client-logo"><img decoding="async" class="client-logo__img" src="Assets/Logos/Asset 15@4x.png" alt="Owesome Recruiter" /></span>
+          <span class="client-logo"><img decoding="async" class="client-logo__img" src="Assets/Logos/Asset 16@4x.png" alt="Owesome Time Tracker" /></span>
         </div>
         <!-- group 2 (duplicate for the seamless loop) -->
         <div class="clients__group" aria-hidden="true">
-          <span class="client-logo"><img class="client-logo__img" src="Assets/Logos/Asset 13@4x.png" alt="" /></span>
-          <span class="client-logo"><img class="client-logo__img" src="Assets/Logos/Asset 14@4x.png" alt="" /></span>
-          <span class="client-logo"><img class="client-logo__img" src="Assets/Logos/Asset 15@4x.png" alt="" /></span>
-          <span class="client-logo"><img class="client-logo__img" src="Assets/Logos/Asset 16@4x.png" alt="" /></span>
+          <span class="client-logo"><img decoding="async" class="client-logo__img" src="Assets/Logos/Asset 13@4x.png" alt="" /></span>
+          <span class="client-logo"><img decoding="async" class="client-logo__img" src="Assets/Logos/Asset 14@4x.png" alt="" /></span>
+          <span class="client-logo"><img decoding="async" class="client-logo__img" src="Assets/Logos/Asset 15@4x.png" alt="" /></span>
+          <span class="client-logo"><img decoding="async" class="client-logo__img" src="Assets/Logos/Asset 16@4x.png" alt="" /></span>
         </div>
       </div>
     </div>
@@ -191,7 +203,7 @@
             <div class="collab__item is-open">
               <button class="collab__head" type="button" aria-expanded="true">
                 <span class="collab__heading">
-                  <span class="collab__name"><img class="collab__name-icon" src="Assets/Work.png" alt="Owesome Work" /></span>
+                  <span class="collab__name"><img decoding="async" class="collab__name-icon" src="Assets/Work.png" alt="Owesome Work" /></span>
                 </span>
               </button>
               <div class="collab__panel">
@@ -204,7 +216,7 @@
             <div class="collab__item">
               <button class="collab__head" type="button" aria-expanded="false">
                 <span class="collab__heading">
-                  <span class="collab__name"><img class="collab__name-icon" src="Assets/HR.png" alt="Owesome HR" /></span>
+                  <span class="collab__name"><img decoding="async" class="collab__name-icon" src="Assets/HR.png" alt="Owesome HR" /></span>
                 </span>
               </button>
               <div class="collab__panel">
@@ -217,7 +229,7 @@
             <div class="collab__item">
               <button class="collab__head" type="button" aria-expanded="false">
                 <span class="collab__heading">
-                  <span class="collab__name"><img class="collab__name-icon" src="Assets/Recruiter.png" alt="Owesome Recruiter" /></span>
+                  <span class="collab__name"><img decoding="async" class="collab__name-icon" src="Assets/Recruiter.png" alt="Owesome Recruiter" /></span>
                 </span>
               </button>
               <div class="collab__panel">
@@ -230,7 +242,7 @@
             <div class="collab__item">
               <button class="collab__head" type="button" aria-expanded="false">
                 <span class="collab__heading">
-                  <span class="collab__name"><img class="collab__name-icon" src="Assets/Time tracker.png" alt="Owesome Time Tracker" /></span>
+                  <span class="collab__name"><img decoding="async" class="collab__name-icon" src="Assets/Time tracker.png" alt="Owesome Time Tracker" /></span>
                 </span>
               </button>
               <div class="collab__panel">
@@ -279,11 +291,11 @@
                 <div class="collab__ed-canvas collab__ed-canvas--multi">
                   <figure class="collab__page is-active">
                     <figcaption><span class="collab__play"></span>Landing Page 2</figcaption>
-                    <img loading="lazy" src="media/oO3rsgWVJeXHAVGDaYWTiK7HF86f7c.jpg" alt="">
+                    <img decoding="async" loading="lazy" src="media/oO3rsgWVJeXHAVGDaYWTiK7HF86f7c.jpg" alt="">
                   </figure>
                   <figure class="collab__page collab__page--peek">
                     <figcaption>Landing Page 3</figcaption>
-                    <img loading="lazy" src="media/RzEOgYm66hxewZvf2kuFngRo3056.jpg" alt="">
+                    <img decoding="async" loading="lazy" src="media/RzEOgYm66hxewZvf2kuFngRo3056.jpg" alt="">
                   </figure>
                   <div class="collab__ed-dock">
                     <span class="collab__ed-ic collab__ed-ic--on"><svg viewBox="0 0 16 16"><path d="M3 2l10 6-4 1-2 4z" fill="currentColor"/></svg></span>
@@ -351,7 +363,7 @@
                   <figure class="collab__frame">
                     <figcaption>Studio — Home</figcaption>
                     <div class="collab__shot collab__shot--handles">
-                      <img loading="lazy" src="media/oO3rsgWVJeXHAVGDaYWTiK7HF86f7c.jpg" alt="">
+                      <img decoding="async" loading="lazy" src="media/oO3rsgWVJeXHAVGDaYWTiK7HF86f7c.jpg" alt="">
                       <span class="collab__handle collab__handle--tl"></span>
                       <span class="collab__handle collab__handle--tr"></span>
                       <span class="collab__handle collab__handle--bl"></span>
@@ -425,7 +437,7 @@
                   <figure class="collab__frame">
                     <figcaption>CMS — Journal</figcaption>
                     <div class="collab__shot">
-                      <img loading="lazy" src="media/RzEOgYm66hxewZvf2kuFngRo3056.jpg" alt="">
+                      <img decoding="async" loading="lazy" src="media/RzEOgYm66hxewZvf2kuFngRo3056.jpg" alt="">
                     </div>
                   </figure>
                   <div class="collab__ed-dock">
@@ -491,7 +503,7 @@
                 <div class="collab__ed-canvas">
                   <figure class="collab__frame">
                     <div class="collab__shot">
-                      <img loading="lazy" src="media/oO3rsgWVJeXHAVGDaYWTiK7HF86f7c.jpg" alt="">
+                      <img decoding="async" loading="lazy" src="media/oO3rsgWVJeXHAVGDaYWTiK7HF86f7c.jpg" alt="">
                     </div>
                   </figure>
                   <span class="collab__cursor collab__cursor--1"><span class="collab__cursor-tip"></span>Benjamin</span>
@@ -576,25 +588,25 @@
           <!-- one panel per step; JS toggles is-active -->
           <div class="process__panel is-active" data-panel="0" role="tabpanel">
             <div class="process__shot">
-              <img src="Assets/Step 1 image.png" alt="Log in to Owesome Suite" loading="lazy" />
+              <img decoding="async" src="Assets/Step 1 image.png" alt="Log in to Owesome Suite" loading="lazy" />
             </div>
           </div>
 
           <div class="process__panel" data-panel="1" role="tabpanel">
             <div class="process__shot">
-              <img src="Assets/Step 1 image.png" alt="Select your product" loading="lazy" />
+              <img decoding="async" src="Assets/Step 1 image.png" alt="Select your product" loading="lazy" />
             </div>
           </div>
 
           <div class="process__panel" data-panel="2" role="tabpanel">
             <div class="process__shot">
-              <img src="Assets/Step 1 image.png" alt="Choose your plan" loading="lazy" />
+              <img decoding="async" src="Assets/Step 1 image.png" alt="Choose your plan" loading="lazy" />
             </div>
           </div>
 
           <div class="process__panel" data-panel="3" role="tabpanel">
             <div class="process__shot">
-              <img src="Assets/Step 1 image.png" alt="Enjoy" loading="lazy" />
+              <img decoding="async" src="Assets/Step 1 image.png" alt="Enjoy" loading="lazy" />
             </div>
           </div>
         </div>
@@ -720,17 +732,17 @@
                   <span class="fc-chip">5 members</span>
                 </div>
                 <div class="fc-member">
-                  <span class="fc-av fc-av--1"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ava Carter" loading="lazy"></span>
+                  <span class="fc-av fc-av--1"><img decoding="async" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ava Carter" loading="lazy"></span>
                   <span class="fc-grow"><b>Ava Carter</b><span class="fc-sub">Product team</span></span>
                   <span class="fc-badge fc-badge--work">Work</span>
                 </div>
                 <div class="fc-member">
-                  <span class="fc-av fc-av--2"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marcus Lee" loading="lazy"></span>
+                  <span class="fc-av fc-av--2"><img decoding="async" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marcus Lee" loading="lazy"></span>
                   <span class="fc-grow"><b>Marcus Lee</b><span class="fc-sub">People ops</span></span>
                   <span class="fc-badge fc-badge--hr">HR</span>
                 </div>
                 <div class="fc-member">
-                  <span class="fc-av fc-av--3"><img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Jordan Kim" loading="lazy"></span>
+                  <span class="fc-av fc-av--3"><img decoding="async" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Jordan Kim" loading="lazy"></span>
                   <span class="fc-grow"><b>Jordan Kim</b><span class="fc-sub">Talent</span></span>
                   <span class="fc-badge fc-badge--hire">Hiring</span>
                 </div>
@@ -794,7 +806,7 @@
             </div>
             <div class="feature-card__media">
               <div class="fc-shot fc-dash-img" aria-hidden="true">
-                <img src="Assets/Logos/Customizable.png" alt="Owesome Suite dashboard" loading="lazy" />
+                <img decoding="async" src="Assets/Logos/Customizable.png" alt="Owesome Suite dashboard" loading="lazy" />
               </div>
             </div>
           </article>
@@ -827,13 +839,13 @@
                     <div class="hover-out-text">Discover More</div>
                   </div>
                   <div class="text-button-icon-wrapper margin-top-two">
-                    <img width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-in">
-                    <img width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-out">
+                    <img decoding="async" width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-in">
+                    <img decoding="async" width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-out">
                   </div>
                 </a>
               </div>
             </div>
-            <img class="border-radius-twenty common-box-shadow responsive-full-width" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a4ee3bed5791455d32e_Features%20Dashboard%20(2).webp" width="330" height="186" alt="Features Dashboard" sizes="(max-width: 479px) 100vw, 330px" loading="lazy" srcset="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a4ee3bed5791455d32e_Features%20Dashboard%20(2)-p-500.webp 500w, https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a4ee3bed5791455d32e_Features%20Dashboard%20(2).webp 660w">
+            <img decoding="async" class="border-radius-twenty common-box-shadow responsive-full-width" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a4ee3bed5791455d32e_Features%20Dashboard%20(2).webp" width="330" height="186" alt="Features Dashboard" sizes="(max-width: 479px) 100vw, 330px" loading="lazy" srcset="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a4ee3bed5791455d32e_Features%20Dashboard%20(2)-p-500.webp 500w, https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a4ee3bed5791455d32e_Features%20Dashboard%20(2).webp 660w">
           </div>
 
           <!-- Center column — AI card (with marquee) + green stats card -->
@@ -849,8 +861,8 @@
                       <div class="hover-out-text">Discover More</div>
                     </div>
                     <div class="text-button-icon-wrapper margin-top-two">
-                      <img width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-in">
-                      <img width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-out">
+                      <img decoding="async" width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-in">
+                      <img decoding="async" width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-out">
                     </div>
                   </a>
                 </div>
@@ -858,71 +870,71 @@
               <div class="w-layout-vflex edge-card-marquee">
                 <div class="w-layout-hflex marquee-main">
                   <div class="w-layout-hflex marquee-train">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f29_icon%2008.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f27_icon%2009.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bc_icon%2014.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f24_icon%2016.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bf_icon%2012.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f26_icon%2013.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bd_icon%2019.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3ba_icon%2010.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f28_icon%2017.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f25_icon%2015.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bb_icon%2011.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f29_icon%2008.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f27_icon%2009.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bc_icon%2014.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f24_icon%2016.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bf_icon%2012.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f26_icon%2013.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bd_icon%2019.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3ba_icon%2010.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f28_icon%2017.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f25_icon%2015.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bb_icon%2011.svg">
                   </div>
                   <div class="w-layout-hflex marquee-train" aria-hidden="true">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f29_icon%2008.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f27_icon%2009.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bc_icon%2014.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f24_icon%2016.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bf_icon%2012.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f26_icon%2013.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bd_icon%2019.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3ba_icon%2010.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f28_icon%2017.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f25_icon%2015.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bb_icon%2011.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f29_icon%2008.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f27_icon%2009.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bc_icon%2014.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f24_icon%2016.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bf_icon%2012.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f26_icon%2013.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bd_icon%2019.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3ba_icon%2010.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f28_icon%2017.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f25_icon%2015.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bb_icon%2011.svg">
                   </div>
                 </div>
                 <div class="w-layout-hflex marquee-main reverse">
                   <div class="w-layout-hflex marquee-train reverse">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f29_icon%2008.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f27_icon%2009.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bc_icon%2014.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f24_icon%2016.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bf_icon%2012.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f26_icon%2013.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bd_icon%2019.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3ba_icon%2010.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f28_icon%2017.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f25_icon%2015.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bb_icon%2011.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f29_icon%2008.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f27_icon%2009.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bc_icon%2014.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f24_icon%2016.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bf_icon%2012.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f26_icon%2013.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bd_icon%2019.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3ba_icon%2010.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f28_icon%2017.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f25_icon%2015.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bb_icon%2011.svg">
                   </div>
                   <div class="w-layout-hflex marquee-train reverse" aria-hidden="true">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f29_icon%2008.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f27_icon%2009.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bc_icon%2014.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f24_icon%2016.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bf_icon%2012.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f26_icon%2013.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bd_icon%2019.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3ba_icon%2010.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f28_icon%2017.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f25_icon%2015.svg">
-                    <img width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bb_icon%2011.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f29_icon%2008.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f27_icon%2009.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bc_icon%2014.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f24_icon%2016.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bf_icon%2012.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f26_icon%2013.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bd_icon%2019.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3ba_icon%2010.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f28_icon%2017.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec169fa92514f1657f25_icon%2015.svg">
+                    <img decoding="async" width="49" height="49" alt="" loading="lazy" class="edge-card-marquee-image" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3bb_icon%2011.svg">
                   </div>
                 </div>
               </div>
             </div>
             <div class="w-layout-vflex edge-card-image border-radius-twenty">
-              <img width="338" height="97" alt="Likes" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ed308ed4c6db1762fa4b_Likes.svg" loading="lazy" class="border-radius-fifteen responsive-full-width">
-              <img width="338" height="97" alt="Balance" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ed308ed4c6db1762fa4a_Total%20Balance.svg" loading="lazy" class="border-radius-fifteen responsive-full-width">
+              <img decoding="async" width="338" height="97" alt="Likes" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ed308ed4c6db1762fa4b_Likes.svg" loading="lazy" class="border-radius-fifteen responsive-full-width">
+              <img decoding="async" width="338" height="97" alt="Balance" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ed308ed4c6db1762fa4a_Total%20Balance.svg" loading="lazy" class="border-radius-fifteen responsive-full-width">
             </div>
           </div>
 
           <!-- Card 3 — Cybersecurity & Protection -->
           <div class="w-layout-vflex edge-card border-radius-twenty" data-reveal>
-            <img class="border-radius-twenty common-box-shadow responsive-full-width" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a0c9ea7d8e7f6e21d8d_Features%20Dashboard%20(1).webp" width="330" height="362" alt="Features Dashboard" sizes="(max-width: 479px) 100vw, 330px" loading="lazy" srcset="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a0c9ea7d8e7f6e21d8d_Features%20Dashboard%20(1)-p-500.webp 500w, https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a0c9ea7d8e7f6e21d8d_Features%20Dashboard%20(1).webp 660w">
+            <img decoding="async" class="border-radius-twenty common-box-shadow responsive-full-width" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a0c9ea7d8e7f6e21d8d_Features%20Dashboard%20(1).webp" width="330" height="362" alt="Features Dashboard" sizes="(max-width: 479px) 100vw, 330px" loading="lazy" srcset="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a0c9ea7d8e7f6e21d8d_Features%20Dashboard%20(1)-p-500.webp 500w, https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/67ac7a0c9ea7d8e7f6e21d8d_Features%20Dashboard%20(1).webp 660w">
             <div class="w-layout-vflex edge-card-text">
               <div class="heading-style-h5">Cybersecurity &amp; Protection</div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In viverra nunc erat</p>
@@ -933,8 +945,8 @@
                     <div class="hover-out-text">Discover More</div>
                   </div>
                   <div class="text-button-icon-wrapper margin-top-two">
-                    <img width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-in">
-                    <img width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-out">
+                    <img decoding="async" width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-in">
+                    <img decoding="async" width="10" height="9" alt="Arrow" src="https://cdn.prod.website-files.com/674d7b78ccfd203c828f64be/6785ec670d486552c96fc3cc_Button%20Arrow%20Black.svg" loading="lazy" class="icon-out">
                   </div>
                 </a>
               </div>
@@ -960,7 +972,7 @@
               <div class="toggle-circle"></div>
             </div>
             <p class="toggle-text">Yearly</p>
-            <img
+            <img decoding="async"
               class="save-image"
               loading="lazy"
               src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b55_Save%20container.svg"
@@ -983,10 +995,10 @@
                 <a href="#" class="hero-button is-navbar"><div class="hero-button-content-wrap"><p class="hero-button-text">Get Started Now</p></div></a>
               </div>
               <div class="pricing-card-features">
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Basic workflow automation</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead tracking &amp; pipeline view</p></div>
-                <div class="pricing-card-feature-item _01"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced reporting &amp; analytics</p></div>
-                <div class="pricing-card-feature-item _01"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Basic workflow automation</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead tracking &amp; pipeline view</p></div>
+                <div class="pricing-card-feature-item _01"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced reporting &amp; analytics</p></div>
+                <div class="pricing-card-feature-item _01"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
               </div>
             </div>
 
@@ -1004,10 +1016,10 @@
                 <p class="popular-text">Most Popular</p>
               </div>
               <div class="pricing-card-features">
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Workflow Automation</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead Tracking &amp; Pipeline View</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Reporting &amp; Analytics</p></div>
-                <div class="pricing-card-feature-item _01"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Workflow Automation</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead Tracking &amp; Pipeline View</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Reporting &amp; Analytics</p></div>
+                <div class="pricing-card-feature-item _01"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
               </div>
             </div>
 
@@ -1024,10 +1036,10 @@
                 <a href="#" class="hero-button is-navbar"><div class="hero-button-content-wrap"><p class="hero-button-text">Get Started Now</p></div></a>
               </div>
               <div class="pricing-card-features">
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Workflow Automation</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead Tracking &amp; Pipeline View</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Reporting &amp; Analytics</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Workflow Automation</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead Tracking &amp; Pipeline View</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Reporting &amp; Analytics</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
               </div>
             </div>
           </div>
@@ -1047,10 +1059,10 @@
                 <a href="#" class="hero-button is-navbar"><div class="hero-button-content-wrap"><p class="hero-button-text">Get Started Now</p></div></a>
               </div>
               <div class="pricing-card-features">
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Basic workflow automation</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead tracking &amp; pipeline view</p></div>
-                <div class="pricing-card-feature-item _01"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced reporting &amp; analytics</p></div>
-                <div class="pricing-card-feature-item _01"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Basic workflow automation</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead tracking &amp; pipeline view</p></div>
+                <div class="pricing-card-feature-item _01"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced reporting &amp; analytics</p></div>
+                <div class="pricing-card-feature-item _01"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
               </div>
             </div>
 
@@ -1068,10 +1080,10 @@
                 <p class="popular-text">Most Popular</p>
               </div>
               <div class="pricing-card-features">
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Workflow Automation</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead Tracking &amp; Pipeline View</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Reporting &amp; Analytics</p></div>
-                <div class="pricing-card-feature-item _01"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Workflow Automation</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead Tracking &amp; Pipeline View</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Reporting &amp; Analytics</p></div>
+                <div class="pricing-card-feature-item _01"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b46_Frame%201707482499%20(1).svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
               </div>
             </div>
 
@@ -1088,10 +1100,10 @@
                 <a href="#" class="hero-button is-navbar"><div class="hero-button-content-wrap"><p class="hero-button-text">Get Started Now</p></div></a>
               </div>
               <div class="pricing-card-features">
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Workflow Automation</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead Tracking &amp; Pipeline View</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Reporting &amp; Analytics</p></div>
-                <div class="pricing-card-feature-item"><img class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Workflow Automation</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Lead Tracking &amp; Pipeline View</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">Advanced Reporting &amp; Analytics</p></div>
+                <div class="pricing-card-feature-item"><img decoding="async" class="icon" src="https://cdn.prod.website-files.com/69115b98998f0cf7ce3389dc/69115b98998f0cf7ce338b45_Frame%201707482499.svg" loading="lazy" alt="Icon" /><p class="pricing-card-feature-text">CRM &amp; API integrations</p></div>
               </div>
             </div>
           </div>
@@ -1104,7 +1116,7 @@
   <section class="enterprise-section" data-section-reveal>
     <div class="enterprise-container">
       <div class="enterprise-banner" data-reveal>
-        <img class="enterprise-bg" src="Assets/BG 6.png" alt="" aria-hidden="true" />
+        <img decoding="async" class="enterprise-bg" src="Assets/BG 6.png" alt="" aria-hidden="true" />
         <div class="enterprise-text">
           <h3 class="enterprise-title">Enterprise plan</h3>
           <p class="enterprise-subtext">Need a custom solution for your organization? Talk with our team to design a plan for your needs.</p>
@@ -1128,9 +1140,9 @@
           <div class="faq-cta" data-reveal>
             <div class="faq-cta__top">
               <div class="faq-cta__avatars">
-                <span class="faq-cta__av"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" loading="lazy" /></span>
-                <span class="faq-cta__av"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="" loading="lazy" /></span>
-                <span class="faq-cta__av"><img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" loading="lazy" /></span>
+                <span class="faq-cta__av"><img decoding="async" src="https://randomuser.me/api/portraits/men/32.jpg" alt="" loading="lazy" /></span>
+                <span class="faq-cta__av"><img decoding="async" src="https://randomuser.me/api/portraits/women/68.jpg" alt="" loading="lazy" /></span>
+                <span class="faq-cta__av"><img decoding="async" src="https://randomuser.me/api/portraits/men/75.jpg" alt="" loading="lazy" /></span>
               </div>
               <span class="faq-cta__plus">+</span>
               <span class="faq-cta__you">You</span>
@@ -1232,7 +1244,7 @@
   <!-- ===== Final CTA section (Promora) ===== -->
   <section class="cta-final" id="get-started">
     <div class="cta-final__bg" aria-hidden="true">
-      <img
+      <img decoding="async"
         class="cta-final__bg-img"
         loading="lazy"
         src="Assets/BG 2.png"
@@ -1280,7 +1292,7 @@
         </div>
 
         <div class="cta-final__image-wrap" data-cta-scale>
-          <img
+          <img decoding="async"
             class="cta-final__image"
             loading="lazy"
             src="Assets/Dashboard.png"
@@ -1299,7 +1311,7 @@
         <div class="footer__left">
           <div class="footer__brand" data-footer-reveal>
             <a href="#hero" class="footer__logo" aria-label="Owesome Suite home">
-              <img class="footer__logo-img" src="Assets/Asset 3@3x.png" alt="Owesome Suite" width="761" height="130" />
+              <img decoding="async" class="footer__logo-img" src="Assets/Asset 3@3x.png" alt="Owesome Suite" width="761" height="130" />
             </a>
             <p class="footer__tagline">
               Owesome Suite is the all-in-one platform for seamless SaaS solutions, built to help your team achieve more.
@@ -1378,16 +1390,16 @@
             </div>
             <div class="footer__socials">
               <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="footer__social">
-                <img src="https://cdn.prod.website-files.com/68f6f8f23667a8fbd4052525/68f6f8f23667a8fbd40525ce_facebook-02.svg" loading="lazy" alt="Facebook" />
+                <img decoding="async" src="https://cdn.prod.website-files.com/68f6f8f23667a8fbd4052525/68f6f8f23667a8fbd40525ce_facebook-02.svg" loading="lazy" alt="Facebook" />
               </a>
               <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="footer__social">
-                <img src="https://cdn.prod.website-files.com/68f6f8f23667a8fbd4052525/68f6f8f23667a8fbd40525cc_instagram.svg" loading="lazy" alt="Instagram" />
+                <img decoding="async" src="https://cdn.prod.website-files.com/68f6f8f23667a8fbd4052525/68f6f8f23667a8fbd40525cc_instagram.svg" loading="lazy" alt="Instagram" />
               </a>
               <a href="https://x.com/" target="_blank" rel="noopener" class="footer__social">
-                <img src="https://cdn.prod.website-files.com/68f6f8f23667a8fbd4052525/68f6f8f23667a8fbd40525cb_new-twitter.svg" loading="lazy" alt="X" />
+                <img decoding="async" src="https://cdn.prod.website-files.com/68f6f8f23667a8fbd4052525/68f6f8f23667a8fbd40525cb_new-twitter.svg" loading="lazy" alt="X" />
               </a>
               <a href="https://www.linkedin.com/" target="_blank" rel="noopener" class="footer__social">
-                <img src="https://cdn.prod.website-files.com/68f6f8f23667a8fbd4052525/68f6f8f23667a8fbd40525cd_linkedin-02.svg" loading="lazy" alt="LinkedIn" />
+                <img decoding="async" src="https://cdn.prod.website-files.com/68f6f8f23667a8fbd4052525/68f6f8f23667a8fbd40525cd_linkedin-02.svg" loading="lazy" alt="LinkedIn" />
               </a>
             </div>
           </div>

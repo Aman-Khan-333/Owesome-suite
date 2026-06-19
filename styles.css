@@ -284,6 +284,55 @@ h1, h2, h3, h4, h5, h6 {
   flex-shrink: 0;
 }
 
+/* ===== Mobile menu toggle (hamburger) — hidden on desktop ===== */
+.nav__toggle {
+  display: none;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 4px solid rgba(225, 226, 248, 0.55);
+  border-radius: 14px;
+  background: #ffffff;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-direction: column;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.nav__toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-heading);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease,
+    background-color 0.3s ease;
+}
+/* animate to an X when the menu is open */
+.nav--open .nav__toggle span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav--open .nav__toggle span:nth-child(2) {
+  opacity: 0;
+}
+.nav--open .nav__toggle span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+/* dark-section theme for the toggle */
+.nav--dark .nav__toggle {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.nav--dark .nav__toggle span {
+  background: #fff;
+}
+
 /* ===== Hero shell ===== */
 .hero {
   position: relative;
@@ -2275,8 +2324,38 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ===== Responsive ===== */
 @media (max-width: 820px) {
+  /* show the hamburger; turn the pill into a dropdown panel */
+  .nav__toggle {
+    display: inline-flex;
+  }
   .nav__pill {
-    display: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    left: auto;
+    right: 0;
+    transform: translateY(-8px);
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 190px;
+    padding: 6px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px -16px rgba(20, 12, 50, 0.35);
+    /* hidden until opened */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0.22s ease;
+  }
+  .nav--open .nav__pill {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .nav__pill a {
+    text-align: center;
+    padding: 13px 22px;
   }
 }
 
@@ -5075,4 +5154,168 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ===================================================================
+   Responsive polish — consolidated mobile/tablet pass.
+   Layered last so these rules win at equal specificity. Breakpoints:
+   tablet ≤991px · mobile ≤640px · small phone ≤480px.
+   =================================================================== */
+
+/* horizontal-overflow guard: `clip` trims stray overflow WITHOUT creating a
+   scroll container, so the hero's position:sticky pin keeps working */
+html {
+  overflow-x: clip;
+}
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+/* ---------- Tablet (≤991px) ---------- */
+@media (max-width: 991px) {
+  /* trim oversized desktop side-padding so tablet content isn't cramped */
+  .features {
+    padding: 90px 32px 70px;
+  }
+  .process {
+    padding: 80px 32px 130px;
+  }
+  .faq-section {
+    padding: 40px 32px 70px;
+  }
+  .cta-final {
+    padding: 60px 32px 0;
+  }
+  /* (features top row already drops to 2-up at ≤1100 and 1-up at ≤767) */
+}
+
+/* ---------- Mobile (≤640px) ---------- */
+@media (max-width: 640px) {
+  /* unify heading sizes so nothing overflows on phones */
+  .bottlenecks__title,
+  .pricing-title-2,
+  .faq-heading {
+    font-size: 32px;
+    letter-spacing: -1px;
+  }
+  .collab__title,
+  .process__title,
+  .features__title,
+  .section-title {
+    font-size: 30px;
+    letter-spacing: -1px;
+  }
+  .hero__title {
+    font-size: 44px;
+  }
+
+  /* clients marquee: smaller logos + tighter spacing */
+  .clients {
+    padding: 50px 0 56px;
+  }
+  .client-logo {
+    padding: 0 22px;
+    font-size: 18px;
+  }
+  .client-logo__img {
+    height: 26px;
+  }
+
+  /* collaborate editor mock: the fixed 232px + 212px side rails overflow a
+     phone-width card — drop them and show just the canvas */
+  .collab__ed-body {
+    grid-template-columns: 1fr;
+  }
+  .collab__ed-side,
+  .collab__ed-props {
+    display: none;
+  }
+
+  /* feature-card mockups: a touch more breathing room */
+  .feature-card {
+    padding: 30px 20px 0;
+  }
+
+  /* restore tight phone side-padding (the ≤991 block above would otherwise
+     keep 32px sides all the way down) */
+  .features {
+    padding: 45px 20px 60px;
+  }
+  .process {
+    padding: 56px 20px 110px;
+  }
+  .faq-section {
+    padding: 36px 20px 60px;
+  }
+  .cta-final {
+    padding: 48px 20px 0;
+  }
+}
+
+/* ---------- Hero: keep the pinned stage inside small viewports ---------- */
+@media (max-width: 768px) {
+  .hero {
+    height: 150vh;
+  }
+  .hero__stage {
+    min-height: 540px;
+    margin: 12px;
+  }
+}
+@media (max-width: 480px) {
+  .hero {
+    height: 138vh;
+  }
+  .hero__stage {
+    min-height: 470px;
+  }
+  .hero__title {
+    font-size: 38px;
+  }
+  /* full-width CTA buttons read better on narrow phones */
+  .hero__cta {
+    width: 100%;
+  }
+  .hero__cta .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+/* ===================================================================
+   Performance: skip rendering off-screen sections until they're near
+   the viewport. `content-visibility: auto` cuts initial layout/paint
+   cost and per-frame scroll work with NO visual or layout change.
+   `contain-intrinsic-size: auto <h>` reserves a placeholder height so
+   the scrollbar stays stable (the `auto` keyword remembers the real
+   height after first render, so there's no jump on the way back).
+   Applied only to self-contained sections WITHOUT scroll-driven JS or
+   position:sticky (hero, bottlenecks, collaborate, process and the
+   final-CTA scrub are intentionally left untouched).
+   =================================================================== */
+.clients {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 240px;
+}
+.features {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1500px;
+}
+.pricing-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1000px;
+}
+.enterprise-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+}
+.faq-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 760px;
+}
+.footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 560px;
 }

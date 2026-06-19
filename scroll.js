@@ -69,6 +69,38 @@
     });
   }
 
+  /* ---------- Mobile nav: hamburger toggle ---------- */
+  var navEl = document.getElementById("nav");
+  var navToggle = document.getElementById("nav-toggle");
+  var navMenu = document.getElementById("nav-menu");
+  if (navEl && navToggle && navMenu) {
+    function navClose() {
+      navEl.classList.remove("nav--open");
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.setAttribute("aria-label", "Open menu");
+    }
+    function navOpen() {
+      navEl.classList.add("nav--open");
+      navToggle.setAttribute("aria-expanded", "true");
+      navToggle.setAttribute("aria-label", "Close menu");
+    }
+    navToggle.addEventListener("click", function () {
+      if (navEl.classList.contains("nav--open")) navClose();
+      else navOpen();
+    });
+    // close after picking a destination
+    navMenu.addEventListener("click", function (e) {
+      if (e.target.closest("a")) navClose();
+    });
+    // close on Escape, and whenever we grow back to desktop width
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") navClose();
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 820) navClose();
+    });
+  }
+
   /* ---------- Scroll-driven parallax + dashboard tilt ---------- */
   var hero = document.getElementById("hero");
   var dashboard = document.querySelector(".hero__dashboard");
@@ -553,8 +585,20 @@
               100) + "%";
       }
     }
-    window.addEventListener("scroll", collabProgress, { passive: true });
-    window.addEventListener("resize", collabProgress);
+    // rAF-throttle so the layout reads + style writes run at most once per
+    // frame instead of on every (lenis-driven) scroll event
+    var collabTicking = false;
+    function collabTick() {
+      if (!collabTicking) {
+        collabTicking = true;
+        requestAnimationFrame(function () {
+          collabProgress();
+          collabTicking = false;
+        });
+      }
+    }
+    window.addEventListener("scroll", collabTick, { passive: true });
+    window.addEventListener("resize", collabTick);
     collabProgress();
   }
 
@@ -589,8 +633,19 @@
       nav.style.setProperty("--nav-fade-h", fadeH + "px");
       nav.style.setProperty("--nav-fade-op", op.toFixed(3));
     }
-    window.addEventListener("scroll", navTheme, { passive: true });
-    window.addEventListener("resize", navTheme);
+    // rAF-throttle the dark-nav probe (reads layout for every dark section)
+    var navThemeTicking = false;
+    function navThemeTick() {
+      if (!navThemeTicking) {
+        navThemeTicking = true;
+        requestAnimationFrame(function () {
+          navTheme();
+          navThemeTicking = false;
+        });
+      }
+    }
+    window.addEventListener("scroll", navThemeTick, { passive: true });
+    window.addEventListener("resize", navThemeTick);
     navTheme();
   }
 
