@@ -605,8 +605,11 @@ h1, h2, h3, h4, h5, h6 {
 .hero__dashboard {
   position: absolute;
   left: 50%;
-  /* top edge parks just below the hero copy */
-  top: 55%;
+  /* Top edge parks just below the hero copy. Percentage on tall screens, with
+     a px floor so it never rides up under the CTA on shorter (laptop) screens.
+     Net ~15% above the original (55%/580px → 44%/464px lift, then nudged 5%
+     back down to 46%/487px) while still clearing the copy on every height. */
+  top: max(46%, 487px);
   bottom: auto;
   z-index: 2;
   width: 100%;
@@ -1071,6 +1074,12 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-block;
   opacity: 0;
   transform: translateY(0.5em);
+}
+
+/* word wrapper for the per-letter reveal headings — keeps a word's letters on
+   the same line so narrow columns wrap between words, never mid-word */
+.rv-word {
+  white-space: nowrap;
 }
 
 .rv-letter.is-in {
@@ -2425,8 +2434,10 @@ h1, h2, h3, h4, h5, h6 {
 .collab__left {
   position: sticky;
   top: 0;
-  flex: 0 0 28%;
-  max-width: 28%;
+  /* 28% on wide screens, but never below 440px so the heading
+     ("Manage everything,") keeps its two-line layout on laptops */
+  flex: 0 0 max(28%, 440px);
+  max-width: max(28%, 440px);
   height: 100vh;
   display: flex;
   align-items: center;

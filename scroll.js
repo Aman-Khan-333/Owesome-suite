@@ -374,17 +374,27 @@
     var splitLetters = function (el) {
       var d = { v: 0 };
       function addLetters(text, container) {
-        text.split("").forEach(function (ch) {
-          if (ch === " ") {
-            container.appendChild(document.createTextNode(" "));
-            return;
+        // group each word's letters in an .rv-word wrapper so the word can
+        // never break mid-character (letters are individually-positioned spans,
+        // which would otherwise wrap anywhere a narrow column forces a break)
+        var words = text.split(" ");
+        words.forEach(function (word, wi) {
+          if (word.length) {
+            var wordEl = document.createElement("span");
+            wordEl.className = "rv-word";
+            word.split("").forEach(function (ch) {
+              var s = document.createElement("span");
+              s.className = "rv-letter";
+              s.textContent = ch;
+              s.style.transitionDelay = d.v + "ms";
+              d.v += 22;
+              wordEl.appendChild(s);
+            });
+            container.appendChild(wordEl);
           }
-          var s = document.createElement("span");
-          s.className = "rv-letter";
-          s.textContent = ch;
-          s.style.transitionDelay = d.v + "ms";
-          d.v += 22;
-          container.appendChild(s);
+          if (wi < words.length - 1) {
+            container.appendChild(document.createTextNode(" "));
+          }
         });
       }
       var nodes = Array.prototype.slice.call(el.childNodes);
